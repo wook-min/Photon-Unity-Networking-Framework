@@ -5,9 +5,11 @@ using UnityEngine.UI;
 using Photon.Realtime;
 using PlayFab.ClientModels;
 using System.Collections;
+using TMPro;
 
 public class PlayfabManager : MonoBehaviourPunCallbacks
 {
+
     [SerializeField] private InputField addressInputField;
     [SerializeField] private InputField passwardInputField;
 
@@ -34,4 +36,29 @@ public class PlayfabManager : MonoBehaviourPunCallbacks
         // 특정 로비를 생성하여 진입하는 함수
         PhotonNetwork.JoinLobby();
     }
+
+    public override void OnJoinedLobby()
+    {
+        PhotonNetwork.LoadLevel("Lobby");
+    }
+
+    public void Login()
+    {
+        var request = new LoginWithEmailAddressRequest
+        {
+            Email = addressInputField.text,
+            Password = passwardInputField.text
+        };
+
+        // 콜백으로 성공, 실패를 반환하는 로그인 시도 함수
+        PlayFabClientAPI.LoginWithEmailAddress
+            (request, Success, Failure);
+    }
+
+    public void Failure(PlayFabError playFabError)
+    {
+        PannelManager.Instance.Load(Panel.ERROR, playFabError.GenerateErrorReport());
+        Debug.Log(playFabError.GenerateErrorReport());
+    }
+
 }
