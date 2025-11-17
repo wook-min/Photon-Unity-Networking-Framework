@@ -700,10 +700,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 348861134}
+        m_TargetAssemblyTypeName: PlayfabManager, Assembly-CSharp
+        m_MethodName: SignUp
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1849,5 +1849,5 @@ SceneRoots:
   - {fileID: 1977571325}
   - {fileID: 48517546}
   - {fileID: 658558177}
-  - {fileID: 348861133}
   - {fileID: 2069022987}
+  - {fileID: 348861133}

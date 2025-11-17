@@ -61,4 +61,10 @@ public class PlayfabManager : MonoBehaviourPunCallbacks
         Debug.Log(playFabError.GenerateErrorReport());
     }
 
+    public void SignUp()
+    {
+        PannelManager.Instance.Load(Panel.SUBSCRIBE, "");
+        Debug.Log("회원가입 중...");
+    }
+
 }

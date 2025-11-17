@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public enum Panel
 {
     ERROR,
-    SIGNUP
+    SUBSCRIBE
 }
 
 public class PannelManager : MonoBehaviour
