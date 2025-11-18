@@ -29,6 +29,7 @@ public class SignUpPanel : MonoBehaviour
     public void Success(RegisterPlayFabUserResult result)
     {
         Debug.Log(result.Username);
+        gameObject.SetActive(false);
     }
 
     public void Failure(PlayFab.PlayFabError result)
