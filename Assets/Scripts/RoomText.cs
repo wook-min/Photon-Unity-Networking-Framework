@@ -1,16 +1,21 @@
+﻿using Photon.Pun;
+using Photon.Realtime;
+using TMPro;
 using UnityEngine;
 
 public class RoomText : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private TextMeshProUGUI roomCount;
+    [SerializeField] private TextMeshProUGUI roomName;
+
+    public void OnConnectRoom()
     {
-        
+        PhotonNetwork.JoinRoom(roomName.text);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateRoomText(RoomInfo info)
     {
-        
+        roomName.text = info.Name;
+        roomCount.text = $"[{info.PlayerCount}/{info.MaxPlayers}]";
     }
 }

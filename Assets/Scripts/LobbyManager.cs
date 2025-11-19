@@ -7,28 +7,45 @@ using UnityEngine;
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private Dictionary<string, GameObject> roomDict = new();
+    [SerializeField] private Transform content;
 
-    public event Action OnDestroyRoom; // 룸 파괴 시 이벤트
-    public event Action OnChangedRoom; // 룸 정보 변경 시 이벤트
-    public event Action OnCreateRoom;  // 룸 생성 시 이벤트
-
-    public void Create(string roomName)
+    public override void OnJoinedRoom()
     {
-        if (roomDict.ContainsKey(roomName))
-        {
-            Debug.LogError($"{roomName} is Already Exist!");
-            return;
-        }
-
+        PhotonNetwork.LoadLevel("Game");
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         GameObject prefab = null;
 
-        foreach (var room in roomList)
+        foreach (var roomInfo in roomList)
         {
-            room.
+            // 룸이 삭제된 경우
+            if (roomInfo.RemovedFromList)
+            {
+                roomDict.TryGetValue(roomInfo.Name, out prefab);
+
+                Destroy(prefab);
+
+                roomDict.Remove(roomInfo.Name);
+            }
+            else // 룸의 정보가 변경되는 경우
+            {
+                // 룸이 처음 생성되는 경우
+                if (!roomDict.ContainsKey(roomInfo.Name))
+                {
+                    GameObject clone = Instantiate(Resources.Load<GameObject>("Room"), content);
+                    roomDict.Add(roomInfo.Name, clone);
+                }
+
+                roomDict.TryGetValue(roomInfo.Name, out var pf);
+
+                if (pf.TryGetComponent<RoomText>(out var rt))
+                {
+                    rt.UpdateRoomText(roomInfo);
+                }
+            }
+            
         }
     }
 }
