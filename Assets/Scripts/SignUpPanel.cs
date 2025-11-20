@@ -34,9 +34,53 @@ public class SignUpPanel : MonoBehaviour
 
     public void Failure(PlayFab.PlayFabError result)
     {
-        PannelManager.Instance.Load(Panel.ERROR, result.GenerateErrorReport());
+        PannelManager.Instance.Load(Panel.ERROR, FailureMessage(result));
         userName.text = "";
         userID.text = "";
         userPassward.text = "";
+    }
+
+    public string FailureMessage(PlayFab.PlayFabError playFabError)
+    {
+        string result = "";
+
+        var detail = playFabError.ErrorDetails;
+
+        if (detail != null)
+        {
+            if (detail.ContainsKey("Username"))
+            {
+                result += "올바르지 못한 유저 이름입니다.";
+            }
+
+            if (detail.ContainsKey("Email"))
+            {
+                result += "\n올바르지 못한 이메일 형식입니다.";
+            }
+
+            if (detail.ContainsKey("Password"))
+            {
+                result += "\n올바르지 못한 비밀번호 형식입니다.(6자리 이상)";
+            }
+
+            return result;
+        }
+
+        switch (playFabError.Error)
+        {
+            case PlayFab.PlayFabErrorCode.InvalidEmailOrPassword:
+            case PlayFab.PlayFabErrorCode.InvalidUsernameOrPassword:
+            case PlayFab.PlayFabErrorCode.AccountNotFound:
+                return "로그인 실패: 이메일 또는 비밀번호가 틀렸습니다.";
+
+            case PlayFab.PlayFabErrorCode.AccountBanned:
+                return "계정이 정지되었습니다.";
+
+            case PlayFab.PlayFabErrorCode.InvalidEmailAddress:
+                return "이메일 형식이 올바르지 않습니다.";
+
+            default:
+                return $"기타 오류: {playFabError.Error}";
+        }
     }
 }

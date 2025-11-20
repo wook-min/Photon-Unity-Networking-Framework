@@ -1,11 +1,13 @@
-﻿using UnityEngine;
-using Photon.Pun;
-using PlayFab;
-using UnityEngine.UI;
+﻿using Photon.Pun;
 using Photon.Realtime;
+using PlayFab;
 using PlayFab.ClientModels;
 using System.Collections;
+using System.Linq;
 using TMPro;
+using UnityEditor.PackageManager;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayfabManager : MonoBehaviourPunCallbacks
 {
@@ -57,7 +59,7 @@ public class PlayfabManager : MonoBehaviourPunCallbacks
 
     public void Failure(PlayFabError playFabError)
     {
-        PannelManager.Instance.Load(Panel.ERROR, playFabError.GenerateErrorReport());
+        PannelManager.Instance.Load(Panel.ERROR, FailureMessage(playFabError));
         Debug.Log(playFabError.GenerateErrorReport());
     }
 
@@ -65,6 +67,50 @@ public class PlayfabManager : MonoBehaviourPunCallbacks
     {
         PannelManager.Instance.Load(Panel.SUBSCRIBE, "");
         Debug.Log("회원가입 중...");
+    }
+
+    public string FailureMessage(PlayFab.PlayFabError playFabError)
+    {
+        string result = "";
+
+        var detail = playFabError.ErrorDetails;
+
+        if (detail != null)
+        {
+            if (detail.ContainsKey("Username"))
+            {
+                result += "올바르지 못한 유저 이름입니다.";
+            }
+
+            if (detail.ContainsKey("Email"))
+            {
+                result += "\n올바르지 못한 이메일 형식입니다.";
+            }
+
+            if (detail.ContainsKey("Password"))
+            {
+                result += "\n올바르지 못한 비밀번호 형식입니다.(6자리 이상)";
+            }
+
+            return result;
+        }
+
+        switch (playFabError.Error)
+        {
+            case PlayFabErrorCode.InvalidEmailOrPassword:
+            case PlayFabErrorCode.InvalidUsernameOrPassword:
+            case PlayFabErrorCode.AccountNotFound:
+                return "로그인 실패: 이메일 또는 비밀번호가 틀렸습니다.";
+
+            case PlayFabErrorCode.AccountBanned:
+                return "계정이 정지되었습니다.";
+
+            case PlayFabErrorCode.InvalidEmailAddress:
+                return "이메일 형식이 올바르지 않습니다.";
+
+            default:
+                return $"기타 오류: {playFabError.Error}";
+        }
     }
 
 }
