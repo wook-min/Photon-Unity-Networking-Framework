@@ -8,7 +8,8 @@ using UnityEngine.UI;
 public enum Panel
 {
     ERROR,
-    SUBSCRIBE
+    SUBSCRIBE,
+    RoomCreatePanel
 }
 
 public class PannelManager : MonoBehaviour

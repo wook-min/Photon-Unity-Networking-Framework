@@ -9,6 +9,15 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] private Dictionary<string, GameObject> roomDict = new();
     [SerializeField] private Transform content;
 
+
+    public override void OnConnectedToMaster()
+    {
+        if (PhotonNetwork.InLobby == false)
+        {
+            PhotonNetwork.JoinLobby();
+        }
+    }
+
     public override void OnJoinedRoom()
     {
         PhotonNetwork.LoadLevel("Game");
@@ -47,5 +56,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             }
             
         }
+    }
+
+    public void CreatePanel()
+    {
+        PannelManager.Instance.Load(Panel.RoomCreatePanel, "");
     }
 }
