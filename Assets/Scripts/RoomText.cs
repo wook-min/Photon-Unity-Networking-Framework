@@ -13,6 +13,8 @@ public class RoomText : MonoBehaviour
         PhotonNetwork.JoinRoom(roomName.text);
     }
 
+    
+
     public void UpdateRoomText(RoomInfo info)
     {
         roomName.text = info.Name;

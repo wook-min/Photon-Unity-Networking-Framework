@@ -78,6 +78,11 @@ public class RoomCreatePanel : MonoBehaviourPunCallbacks
         }
     }
 
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        PannelManager.Instance.Load(Panel.ERROR, message);
+    }
+
     public void OnImageChange(bool isOn, Image image)
     {
         if (isOn)
