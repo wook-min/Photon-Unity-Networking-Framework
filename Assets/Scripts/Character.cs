@@ -9,11 +9,13 @@ public class Character : MonoBehaviourPun
 
     [Header("캐릭터 움직임 관련")]
     [SerializeField] private float speed = 3f;
-    [SerializeField] Vector3 direction;
+    [SerializeField] private Vector3 direction;
+    [SerializeField] private Rotation rotation;
 
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
+        rotation = GetComponent<Rotation>();
     }
 
     private void Start()
@@ -27,6 +29,7 @@ public class Character : MonoBehaviourPun
         {
             Control();
             Move();
+            Rotate();
         }
     }
 
@@ -38,11 +41,13 @@ public class Character : MonoBehaviourPun
 
         // direction 방향을 단위 벡터로 설정합니다.
         direction.Normalize();
+
     }
 
     public void Move()
     {
-        controller.Move(direction * speed * Time.deltaTime);
+        controller.Move(controller.transform.TransformDirection(direction)
+            * speed * Time.deltaTime);
     }
 
     public void DisableCamera()
@@ -56,5 +61,18 @@ public class Character : MonoBehaviourPun
         {
             remoteCamera.gameObject.SetActive(false);
         }
+    }
+
+    public void Rotate()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        rotation.RotateY(gameObject);
+    }
+
+    public void Exit()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 }

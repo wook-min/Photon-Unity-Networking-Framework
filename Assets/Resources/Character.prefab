@@ -1081,6 +1081,7 @@ GameObject:
   - component: {fileID: 7608058776022671957}
   - component: {fileID: 9178668328220117778}
   - component: {fileID: 6075168391957189849}
+  - component: {fileID: 2983885811605333383}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -1178,10 +1179,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5680cb6c16005924e96e1ee4c95f0e13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character
-  remoteCamera: {fileID: 0}
+  remoteCamera: {fileID: 8105750816548433339}
   controller: {fileID: 0}
   speed: 5
   direction: {x: 0, y: 0, z: 0}
+  rotation: {fileID: 2983885811605333383}
 --- !u!143 &6075168391957189849
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1207,6 +1209,20 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.125, z: 0}
+--- !u!114 &2983885811605333383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5013315875140353304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20677ffe23638c247b239e51bc0b29db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Rotation
+  speed: 300
+  axis: 0
 --- !u!1 &5108157423773929627
 GameObject:
   m_ObjectHideFlags: 0
@@ -1664,6 +1680,8 @@ GameObject:
   - component: {fileID: 8105750816548433339}
   - component: {fileID: 4736776658187962378}
   - component: {fileID: 3497830317776168955}
+  - component: {fileID: 4613589996558846290}
+  - component: {fileID: 721013224407367247}
   m_Layer: 0
   m_Name: characterView
   m_TagString: Untagged
@@ -1789,6 +1807,37 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &4613589996558846290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6979345509096228433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8326a020397cab249afde68ddb12d54b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Head
+  minAngle: -65
+  maxAngle: 65
+  rotation: {fileID: 721013224407367247}
+  axis: 0
+  speed: 300
+--- !u!114 &721013224407367247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6979345509096228433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20677ffe23638c247b239e51bc0b29db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Rotation
+  speed: 250
+  axis: 0
 --- !u!1 &7168196274258084923
 GameObject:
   m_ObjectHideFlags: 0
