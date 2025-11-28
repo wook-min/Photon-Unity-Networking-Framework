@@ -1082,6 +1082,7 @@ GameObject:
   - component: {fileID: 9178668328220117778}
   - component: {fileID: 6075168391957189849}
   - component: {fileID: 2983885811605333383}
+  - component: {fileID: 5366040738094641986}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -1179,6 +1180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5680cb6c16005924e96e1ee4c95f0e13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character
+  mouse: {fileID: 0}
   remoteCamera: {fileID: 8105750816548433339}
   controller: {fileID: 0}
   speed: 5
@@ -1223,6 +1225,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Rotation
   speed: 300
   axis: 0
+--- !u!114 &5366040738094641986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5013315875140353304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 699f6800312c71341b99b7f896b4d2eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Mouse
 --- !u!1 &5108157423773929627
 GameObject:
   m_ObjectHideFlags: 0

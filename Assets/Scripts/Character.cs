@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class Character : MonoBehaviourPun
 {
+    [Header("마우스 관련")]
+    [SerializeField] private Mouse mouse;
+
     [Header("카메라 관련")]
     [SerializeField] private Camera remoteCamera;
     [SerializeField] private CharacterController controller;
@@ -16,10 +19,12 @@ public class Character : MonoBehaviourPun
     {
         controller = GetComponent<CharacterController>();
         rotation = GetComponent<Rotation>();
+        mouse = GetComponent<Mouse>();
     }
 
     private void Start()
     {
+        mouse.SetMouse(false);
         DisableCamera();
     }
 
@@ -65,14 +70,7 @@ public class Character : MonoBehaviourPun
 
     public void Rotate()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
         rotation.RotateY(gameObject);
     }
 
-    public void Exit()
-    {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-    }
 }
