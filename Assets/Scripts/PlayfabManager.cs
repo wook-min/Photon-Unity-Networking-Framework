@@ -1,11 +1,7 @@
 ﻿using Photon.Pun;
-using Photon.Realtime;
 using PlayFab;
 using PlayFab.ClientModels;
 using System.Collections;
-using System.Linq;
-using TMPro;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,11 +11,19 @@ public class PlayfabManager : MonoBehaviourPunCallbacks
     [SerializeField] private InputField addressInputField;
     [SerializeField] private InputField passwardInputField;
 
+    public string nickName;
+
     public void Success(LoginResult loginResult)
     {
         PhotonNetwork.AutomaticallySyncScene = false;
 
         PhotonNetwork.GameVersion = "1.0f";
+
+        PlayFabClientAPI.GetAccountInfo(new GetAccountInfoRequest(),
+            result => { nickName = result.AccountInfo.TitleInfo.DisplayName; },
+            error => { Debug.LogError(error.GenerateErrorReport()); });
+
+        NickNameClass.Init(nickName);
 
         StartCoroutine(Connect());
     }
@@ -113,4 +117,11 @@ public class PlayfabManager : MonoBehaviourPunCallbacks
         }
     }
 
+}
+
+public static class NickNameClass
+{
+    public static string nickName;
+
+    public static void Init(string name) { nickName = name; }
 }

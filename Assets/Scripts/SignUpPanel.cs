@@ -1,12 +1,7 @@
-﻿using Photon.Pun;
-using Photon.Realtime;
-using PlayFab;
+﻿using PlayFab;
 using PlayFab.ClientModels;
-using PlayFab.PfEditor.EditorModels;
-using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class SignUpPanel : MonoBehaviour
 {

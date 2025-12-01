@@ -1,82 +1,56 @@
 ﻿using Photon.Pun;
-using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class DialogManager : MonoBehaviourPunCallbacks
 {
-    [Header("채팅창")]
-    [SerializeField] private TMP_InputField inputfield;
-    [SerializeField] private GameObject canvas;
-    [SerializeField] private GameObject content;
-    // [SerializeField] private GameObject 
+    [SerializeField] InputField inputField;
+    [SerializeField] Transform parentTransform;
+    [SerializeField] ScrollRect scrollRect;
 
-    private GameObject textPrefab;
-
-    private void Update()
+    void Update()
     {
-        if (Input.GetKeyDown(KeyCode.KeypadEnter) && canvas.activeSelf == false && photonView.IsMine)
+        if (Input.GetKeyDown(KeyCode.Return))
         {
-            canvas.SetActive(true);
-        }
+            inputField.ActivateInputField();
 
-        if (photonView.IsMine && Input.GetKeyDown(KeyCode.KeypadEnter) && canvas.activeSelf == true
-            && EventSystem.current.currentSelectedGameObject != inputfield.gameObject)
-        {
-            SelectInputField();
-        }
+            if (inputField.text.Length <= 0)
+            {
+                return;
+            }
 
-        if (photonView.IsMine && Input.GetKeyDown(KeyCode.KeypadEnter) && canvas.activeSelf == true
-            && EventSystem.current.currentSelectedGameObject == inputfield.gameObject
-            && CheckText())
-        {
-            InputChat();
-        }
+            string talk = NickNameClass.nickName + " : " + inputField.text;
 
-        if (photonView.IsMine && Input.GetKeyDown(KeyCode.KeypadEnter) && canvas.activeSelf == true
-            && EventSystem.current.currentSelectedGameObject == inputfield.gameObject
-            && !CheckText())
-        {
-            CloseChat();
-        }
+            // RPC Target.All : 현재 룸에 있는 모든 클라이언트에게 Talk() 함수를
+            // 실행하라는 명령을 전달합니다.
+            photonView.RPC("Send", RpcTarget.All, talk);
 
+            // inputField의 텍스트를 초기화합니다.
+            inputField.text = "";
 
-    }
-
-    public void SelectInputField()
-    {
-        EventSystem.current.SetSelectedGameObject(inputfield.gameObject);
-    }
-
-    public void InputChat()
-    {
-        if (textPrefab == null)
-        {
-            textPrefab = Resources.Load<GameObject>("Talk");
-        }
-
-        var clone = GameObject.Instantiate(textPrefab, content.transform);
-        
-        if (clone.TryGetComponent<TextMeshProUGUI>(out var text))
-        {
-            text.text = $"{PhotonNetwork.NickName}" + " : "+ inputfield.text;
-        } 
-    }
-
-    public bool CheckText()
-    {
-        if (inputfield.text != "")
-        {
-            return true;
-        }
-        else
-        {
-            return false;
+            // 채팅을 입력한 후에도 이어서 입력을 할 수 있도록 설정합니다.
+            inputField.ActivateInputField();
         }
     }
 
-    public void CloseChat()
+
+    [PunRPC]
+    public void Send(string message)
     {
-        canvas.SetActive(false);
+        // prefab을 하나 생성한 다음 text에 값을 설정합니다.
+        GameObject talk = Instantiate(Resources.Load<GameObject>("Talk"));
+
+        // prefab 오브젝트의 Text 컴포넌트로 접근해서 text의 값을 설정합니다.
+        talk.GetComponent<Text>().text = message;
+
+        // 스크롤 뷰 - content 오브젝트의 자식으로 등록합니다.
+        talk.transform.SetParent(parentTransform);
+
+        // Canvas를 수동으로 동기화 시킵니다.
+        Canvas.ForceUpdateCanvases();
+
+        // 스크롤의 위치를 초기화합니다.
+        scrollRect.verticalNormalizedPosition = 0.0f;
     }
 }

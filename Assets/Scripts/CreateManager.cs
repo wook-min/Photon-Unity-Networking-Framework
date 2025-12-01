@@ -9,6 +9,9 @@ public class CreateManager : MonoBehaviourPunCallbacks
     [SerializeField] private List<Transform> positionList = new();
     [SerializeField] private Quaternion rotation;
 
+    [Header("캐릭터 넘겨주기")]
+    [SerializeField] private DialogManager dialog;
+
 
     private void Awake()
     {
@@ -35,6 +38,6 @@ public class CreateManager : MonoBehaviourPunCallbacks
         int index = (int)PhotonNetwork.CurrentRoom.PlayerCount - 1;
         index = Mathf.Max(index, 0);
 
-        PhotonNetwork.Instantiate("Character", positionList[index].position, rotation);
+        var character = PhotonNetwork.Instantiate("Character", positionList[index].position, rotation);
     }
 }
