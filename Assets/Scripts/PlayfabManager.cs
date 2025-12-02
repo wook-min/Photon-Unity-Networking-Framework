@@ -19,13 +19,14 @@ public class PlayfabManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.GameVersion = "1.0f";
 
-        PlayFabClientAPI.GetAccountInfo(new GetAccountInfoRequest(),
-            result => { nickName = result.AccountInfo.TitleInfo.DisplayName; },
-            error => { Debug.LogError(error.GenerateErrorReport()); });
-
-        NickNameClass.Init(nickName);
+        PlayFabClientAPI.GetAccountInfo(new GetAccountInfoRequest(), Success, Failure);
 
         StartCoroutine(Connect());
+    }
+
+    public void Success(GetAccountInfoResult getAccountInfoResult)
+    {
+        PhotonNetwork.LocalPlayer.NickName = getAccountInfoResult.AccountInfo?.Username;
     }
 
     private IEnumerator Connect()
@@ -117,11 +118,4 @@ public class PlayfabManager : MonoBehaviourPunCallbacks
         }
     }
 
-}
-
-public static class NickNameClass
-{
-    public static string nickName;
-
-    public static void Init(string name) { nickName = name; }
 }
