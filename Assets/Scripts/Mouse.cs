@@ -11,6 +11,10 @@ public class Mouse : MonoBehaviourPunCallbacks
         {
             SetMouse(false);
         }
+        else
+        {
+            SetMouse(false);
+        }
     }
 
 

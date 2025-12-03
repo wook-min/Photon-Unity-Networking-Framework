@@ -589,3 +589,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoomText
   roomCount: {fileID: 2966628804036583376}
   roomName: {fileID: 7568266375149811731}
+  button: {fileID: 5166034435635752142}
