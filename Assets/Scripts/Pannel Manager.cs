@@ -9,7 +9,8 @@ public enum Panel
 {
     ERROR,
     SUBSCRIBE,
-    RoomCreatePanel
+    RoomCreatePanel,
+    Pause
 }
 
 public class PannelManager : MonoBehaviour
@@ -35,6 +36,13 @@ public class PannelManager : MonoBehaviour
     {
         if (panelDict.TryGetValue(panel, out this.panel) == false)
         {
+            if (this.panel == null || this.panel.Equals(null))
+            {
+                Debug.LogWarning($"[PannelManager] {panel} 패널이 Destroy 상태라 재생성합니다.");
+                panelDict.Remove(panel);
+                this.panel = null;
+            }
+
             // 키값을 못찾은 경우
             this.panel = (GameObject)Instantiate(Resources.Load(panel.ToString()));
 

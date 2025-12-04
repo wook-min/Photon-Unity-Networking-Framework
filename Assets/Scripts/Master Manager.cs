@@ -11,12 +11,14 @@ public class MasterManager : MonoBehaviourPunCallbacks
 
     public bool IsRunning { get; private set; } = true;
 
+    private Coroutine currentCo;
+
 
     private void Start()
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            StartCoroutine(SpawnBall());
+            currentCo = StartCoroutine(SpawnBall());
         }
     }
 
@@ -26,9 +28,18 @@ public class MasterManager : MonoBehaviourPunCallbacks
 
         while (IsRunning)
         {
-            PhotonNetwork.InstantiateRoomObject("Ball", Vector3.zero, Quaternion.identity);
+            if (PhotonNetwork.CurrentRoom != null)
+                PhotonNetwork.InstantiateRoomObject("Ball", Vector3.zero, Quaternion.identity);
 
             yield return wait;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (currentCo != null)
+        {
+            StopCoroutine(currentCo);
         }
     }
 

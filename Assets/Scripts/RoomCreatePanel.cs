@@ -125,6 +125,8 @@ public class RoomCreatePanel : MonoBehaviourPunCallbacks
 
         PhotonNetwork.CreateRoom(
             roomName.text, roomOptions);
+
+        gameObject.SetActive(false);
     }
 
 

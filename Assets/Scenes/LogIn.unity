@@ -538,6 +538,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayfabManager
   addressInputField: {fileID: 1063312155}
   passwardInputField: {fileID: 1015028067}
+  nickName: 
 --- !u!1 &510120503
 GameObject:
   m_ObjectHideFlags: 0

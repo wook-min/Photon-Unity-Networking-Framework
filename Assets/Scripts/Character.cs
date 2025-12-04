@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class Character : MonoBehaviourPun
 {
-    [Header("마우스 관련")]
-    [SerializeField] private Mouse mouse;
-
     [Header("카메라 관련")]
     [SerializeField] private Camera remoteCamera;
     [SerializeField] private CharacterController controller;
@@ -19,12 +16,11 @@ public class Character : MonoBehaviourPun
     {
         controller = GetComponent<CharacterController>();
         rotation = GetComponent<Rotation>();
-        mouse = GetComponent<Mouse>();
     }
 
     private void Start()
     {
-        mouse.SetMouse(false);
+        MouseManager.Instance.SetMouse(false);
         DisableCamera();
     }
 
