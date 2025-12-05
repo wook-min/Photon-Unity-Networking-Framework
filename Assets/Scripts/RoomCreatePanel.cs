@@ -16,6 +16,8 @@ public class RoomCreatePanel : MonoBehaviourPunCallbacks
     [SerializeField] private Toggle count3;
     [SerializeField] private Toggle count4;
 
+    // Toggle[] toggles 로 해서 index로 처리하는 방법도 있다.
+
     [Header("생성 및 취소")]
     [SerializeField] private Button create;
     [SerializeField] private Button cancle;
@@ -97,12 +99,13 @@ public class RoomCreatePanel : MonoBehaviourPunCallbacks
 
     public int playerCount()
     {
-        int count = 2;
+        int count = -1;
+
         if (count2.isOn == true)
             count = 2;
         else if (count3.isOn == true)
             count = 3;
-        else if (count3.isOn == true)
+        else if (count4.isOn == true)
             count = 4;
 
         return count;
@@ -145,4 +148,12 @@ public class RoomCreatePanel : MonoBehaviourPunCallbacks
         OnImageChange(false, count3Image);
         OnImageChange(false, count4Image);
     }
+
+
+    /*
+     * 토글 이벤트 형식으로 처리하기
+     bool 매개변수만 이벤트에 직접적으로 등록할 수 있으므로,
+     토글을 조건문으로 isOn 이 true인 토글을 찾아 카운트를 잡아주기.
+     (필드 변수로 저장하고 싶을 시)
+     */
 }

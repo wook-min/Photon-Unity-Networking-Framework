@@ -456,7 +456,6 @@ GameObject:
   - component: {fileID: 450245875544409631}
   - component: {fileID: 9213192616333461767}
   - component: {fileID: 993705294378122795}
-  - component: {fileID: 7746586680391769356}
   m_Layer: 0
   m_Name: Pause
   m_TagString: Untagged
@@ -641,21 +640,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 290b592690ca0a444a0d789377a001c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PausePanel
-  mouse: {fileID: 7746586680391769356}
   continueButton: {fileID: 7372368390576228902}
   quitButton: {fileID: 4045050491125830248}
---- !u!114 &7746586680391769356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4140745419038240723}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 699f6800312c71341b99b7f896b4d2eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Mouse
 --- !u!1 &5755556575360788991
 GameObject:
   m_ObjectHideFlags: 0

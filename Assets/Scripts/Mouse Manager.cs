@@ -18,14 +18,11 @@ public class MouseManager : MonoBehaviourPunCallbacks
         DontDestroyOnLoad(gameObject);
     }
 
-
     private void OnDestroy()
     {
-        if (photonView.IsMine)
-        {
-            SetMouse(true);
-        }
+        SetMouse(true);
     }
+
     public void SetMouse(bool state)
     {
         Cursor.visible = state;

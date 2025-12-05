@@ -45,7 +45,7 @@ public class PannelManager : MonoBehaviour
 
             // 키값을 못찾은 경우
             this.panel = (GameObject)Instantiate(Resources.Load(panel.ToString()));
-
+            DontDestroyOnLoad(this.panel);
             this.panel.name = this.panel.name.Replace("(Clone)", "");
             /*
             string name = this.panel.gameObject.name;

@@ -1,6 +1,6 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,8 +8,11 @@ public class GameManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private InputActionReference actionRef;
 
-    public override void OnJoinedRoom()
+
+    private IEnumerator Start()
     {
+        yield return new WaitUntil(() => PannelManager.Instance != null);
+
         actionRef.action.Enable();
         actionRef.action.performed += OnPerformed;
     }
@@ -22,7 +25,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void OnPerformed(InputAction.CallbackContext cx)
     {
-        if (!photonView.IsMine) return;
         PannelManager.Instance.Load(Panel.Pause, "");
         Debug.Log("패널 생성");
     }

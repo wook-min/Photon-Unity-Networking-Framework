@@ -18,28 +18,18 @@ public class PausePanel : MonoBehaviourPunCallbacks
     public override void OnEnable()
     {
         base.OnEnable();
-        if (photonView.IsMine)
-        {
-            MouseManager.Instance.SetMouse(true);
-        }
+        MouseManager.Instance.SetMouse(true);
     }
 
     public override void OnDisable()
     {
-        if (photonView.IsMine)
-        {
-            MouseManager.Instance.SetMouse(false);
-        }
+        MouseManager.Instance.SetMouse(false);
     }
 
     private void OnDestroy()
     {
         continueButton.onClick.RemoveAllListeners();
         quitButton.onClick.RemoveAllListeners();
-        if (photonView.IsMine)
-        {
-            MouseManager.Instance.SetMouse(true);
-        }
     }
 
 
@@ -49,8 +39,10 @@ public class PausePanel : MonoBehaviourPunCallbacks
     }
 
     public void Quit()
-    {
+    { 
         PhotonNetwork.LeaveRoom();
+        gameObject.SetActive(false);
+        MouseManager.Instance.SetMouse(true);
     }
 
     public override void OnLeftRoom()
